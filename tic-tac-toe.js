@@ -1,57 +1,141 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const board = document.getElementById('board');
-  let currentPlayer = 'X';
-  const cells = Array.from({ length: 9 });
+let currentPlayer = 1;
+let board = [
+  ['', '', ''],
+  ['', '', ''],
+  ['', '', ''],
+];
 
-  cells.forEach((square, index) => {
-    const cell = document.createElement('div');
-    cell.classList.add('cell');
-    cell.dataset.index = index;
-    cell.addEventListener('click', () => handleCellClick(index));
-    board.appendChild(cell);
-  });
+function startGame() {
+  const player1Name = document.getElementById('player1').value;
+  const player2Name = document.getElementById('player2').value;
 
-  function handleCellClick(index) {
-    //revisamos si la casilla esta completa o si el juego ha terminado
-    if (cells[index]) {
-      return;
-    }
+  if (player1Name && player2Name) {
+    document.getElementById('player1').disabled = true;
+    document.getElementById('player2').disabled = true;
 
-    cells[index] = currentPlayer;
-    console.log(cells);
+    initializeBoard();
     displayBoard();
+    resetMessage();
+
+    console.log('Game started!');
+  } else {
+    alert('Please enter names for both players.');
+  }
+}
+
+function initializeBoard() {
+  const table = document.getElementById('board');
+  for (let i = 0; i < 3; i++) {
+    const row = table.insertRow(i);
+    for (let j = 0; j < 3; j++) {
+      const cell = row.insertCell(j);
+      cell.addEventListener('click', () => makeMove(i, j));
+    }
+  }
+}
+
+function displayBoard() {
+  const table = document.getElementById('board');
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      table.rows[i].cells[j].innerText = board[i][j];
+    }
+  }
+}
+
+function makeMove(row, col) {
+  if (board[row][col] === '') {
+    board[row][col] = currentPlayer === 1 ? 'X' : 'O';
+    displayBoard();
+    if (checkWinner()) {
+      showMessage(`Player ${currentPlayer} wins!`);
+      resetGame();
+    } else if (isBoardFull()) {
+      resetMessage();
+      resetGame();
+    } else {
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+    }
+  }
+}
+
+function checkWinner() {
+  // Check rows
+  for (let i = 0; i < 3; i++) {
+    if (
+      board[i][0] !== '' &&
+      board[i][0] === board[i][1] &&
+      board[i][1] === board[i][2]
+    ) {
+      return true;
+    }
   }
 
-  function displayBoard() {
-    cells.forEach((value, index) => {
-      const cell = board.children[index];
-      cell.textContent = value;
-    });
+  // Check columns
+  for (let j = 0; j < 3; j++) {
+    if (
+      board[0][j] !== '' &&
+      board[0][j] === board[1][j] &&
+      board[1][j] === board[2][j]
+    ) {
+      return true;
+    }
   }
 
-  function checkWinner() {
-    const winningCombinations = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-
-    return winningCombinations.some((combination) => {
-      const [a, b, c] = combination;
-      //Reviso si la cell[a] tiene valor y se compara con el valor de b y c
-      return cells[a] && cells[a] === cells[b] && cells[a] === cells[c];
-    });
+  // Check diagonals
+  if (
+    board[0][0] !== '' &&
+    board[0][0] === board[1][1] &&
+    board[1][1] === board[2][2]
+  ) {
+    return true;
   }
-});
 
-/*TODO
-// 1. SHOW A 3X3 TABLE ON THE UI [x]
-// 2. ADD THE ABILITY TO INSERT PLAYER 1 NAME AND PLAYER 2 NAME [ ]
-// 3. ADD THE ABILITY TO START A GAME
-// 4. ADD THE ABILITY TO MAKE A MOVEMENT AND ALTERNATE PLAYERS IN TURNS
-// 5. ONCE THE GAME FINISH SHOW A MESSAGE ON THE CONSOLE WITH THE NAME OF THE WINNER OR IF IT IS A TIE */
+  if (
+    board[0][2] !== '' &&
+    board[0][2] === board[1][1] &&
+    board[1][1] === board[2][0]
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isBoardFull() {
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (board[i][j] === '') {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+function showMessage(message) {
+  const messageElement = document.getElementById('message');
+  messageElement.innerText = message;
+}
+
+function resetMessage() {
+  const messageElement = document.getElementById('message');
+  messageElement.innerText = '';
+}
+
+function resetGame() {
+  currentPlayer = 1;
+  board = [
+    ['', '', ''],
+    ['', '', ''],
+    ['', '', ''],
+  ];
+
+  // Clear the table
+  const table = document.getElementById('board');
+  table.innerHTML = '';
+
+  // Reinitialize the board
+  initializeBoard();
+  displayBoard();
+}
