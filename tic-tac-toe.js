@@ -45,16 +45,12 @@ function cellClick(index) {
 }
 
 function checkWinner() {
-  // Check rows, columns, and diagonals
   for (let i = 0; i < boardSize; i++) {
-    // Check rows
     if (checkLine(i * boardSize, 1)) return;
 
-    // Check columns
     if (checkLine(i, boardSize)) return;
   }
 
-  // Check diagonals
   if (checkLine(0, boardSize + 1)) return;
   if (checkLine(boardSize - 1, boardSize - 1)) return;
 
@@ -97,12 +93,13 @@ function updateScores(winnerName) {
 }
 
 function displayScores() {
-  document.getElementById(
-    'playerOneScore'
-  ).textContent = `Player One Score: ${playerOneScore}`;
-  document.getElementById(
-    'playerTwoScore'
-  ).textContent = `Player Two Score: ${playerTwoScore}`;
+  const playerOneScoreElement = document.getElementById('playerOneScore');
+  const playerTwoScoreElement = document.getElementById('playerTwoScore');
+  const middleScoreElement = document.getElementById('middleScore');
+
+  playerOneScoreElement.textContent = `${playerOneNameInput.value}: ${playerOneScore}`;
+  playerTwoScoreElement.textContent = `${playerTwoNameInput.value}: ${playerTwoScore}`;
+  middleScoreElement.textContent = `${playerOneScore}:${playerTwoScore}`;
 }
 
 function validateNames() {
@@ -111,4 +108,3 @@ function validateNames() {
     playerTwoNameInput.value.trim() !== ''
   );
 }
-

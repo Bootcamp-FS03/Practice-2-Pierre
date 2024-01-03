@@ -15,19 +15,36 @@
   <body>
     <section class="container">
       <div class="form-container">
-        <label for="playerOneName">Player One Name:</label>
-        <input required type="text" id="playerOneName" placeholder="Player One" />
-        <label for="playerTwoName">Player Two Name:</label>
-        <input required type="text" id="playerTwoName" placeholder="Player Two" />
-        <br />
-        <label for="boardSize">Enter Board Size:</label>
-        <input type="number" id="boardSize" min="3" value="3" />
+        <fieldset>
+          <label for="playerOneName">Player One Name:</label>
+          <input
+            required
+            type="text"
+            id="playerOneName"
+            placeholder="Player One"
+          />
+        </fieldset>
+
+        <fieldset>
+          <label for="playerTwoName">Player Two Name:</label>
+          <input
+            required
+            type="text"
+            id="playerTwoName"
+            placeholder="Player Two"
+          />
+        </fieldset>
+        <fieldset>
+          <label for="boardSize">Enter Board Size:</label>
+          <input type="number" id="boardSize" min="3" value="3" />
+        </fieldset>
         <button class="startButton" onclick="startGame()">Start Game</button>
       </div>
       <div>
         <div id="scores" class="scores">
-          <p class="score" id="playerOneScore">Player One Score: 0</p>
-          <p class="score" id="playerTwoScore">Player Two Score: 0</p>
+          <p class="score" id="playerOneScore">Player One</p>
+          <p class="score" id="middleScore">0:0</p>
+          <p class="score" id="playerTwoScore">Player Two</p>
         </div>
         <div id="board" class="board"></div>
       </div>

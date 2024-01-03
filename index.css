@@ -5,31 +5,40 @@ body {
     height: 100vh;
     margin: 0;
     font-family: 'Poppins', sans-serif;
+    background-color: #F8F8F8;
   }
   
   .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
     align-items: center;
   }
-  
+  fieldset{
+    border: none;
+    padding: none;
+  }
+  label{
+    display: block;
+  }
   .form-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-right: 20px;
     padding: 1.5rem;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 50px;
+    background: #F8f8f8;
+    box-shadow:  20px 20px 60px #d3d3d3,
+             -20px -20px 60px #ffffff;
   }
   
   input {
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    width: 200px; /* Optional: Adjust the width as needed */
+    border: none;
+    border-radius: 10px;
+    background-color: #f3f4f6;
+    width: 200px; 
   }
   .scores{
     display: flex;
@@ -42,13 +51,22 @@ body {
   }
   
   .startButton {
-    padding: 12px;
-    font-size: 16px;
-    background-color: #4caf50;
-    color: #fff;
+    background: linear-gradient(to right, #f12711, #f5af19);
     border: none;
-    border-radius: 4px;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
     cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .startButton:hover {
+    box-shadow: none;
+    transition: all;
   }
   
   .dimensionButton:hover {
