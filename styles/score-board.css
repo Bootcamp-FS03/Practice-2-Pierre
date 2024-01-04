@@ -1,0 +1,26 @@
+
+.score-board {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: large;
+    font-weight: bold;
+    color: #5A6C87;
+    margin-top: 1rem;
+}
+
+  .scores{
+    display: inline-block;
+    color: #F23B13; 
+    padding: 10px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    margin: 4px 2px;
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow: inset 20px 20px 60px #bebebe,
+            inset -20px -20px 60px #ffffff;
+  }

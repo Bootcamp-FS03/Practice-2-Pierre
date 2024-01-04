@@ -1,6 +1,11 @@
 const board = document.getElementById('board');
+const boardScore = document.getElementById('score-board');
 const playerOneNameInput = document.getElementById('playerOneName');
 const playerTwoNameInput = document.getElementById('playerTwoName');
+const playerOneScoreElement = document.getElementById('playerOneScore');
+const playerTwoScoreElement = document.getElementById('playerTwoScore');
+const currentPlayerTurnElement = document.getElementById('currentPlayerTurn');
+const middleScoreElement = document.getElementById('middleScore');
 let playerOneScore = 0;
 let playerTwoScore = 0;
 let currentPlayer = 'X';
@@ -19,20 +24,31 @@ function startGame() {
 
 function initializeBoard() {
   gameBoard = Array.from({ length: boardSize * boardSize }, () => '');
-  console.log(gameBoard);
 }
 
 function renderBoard() {
   board.innerHTML = '';
+  board.style.display = 'grid';
+  boardScore.style.display = 'flex';
+  playerOneScoreElement.textContent = playerOneNameInput.value.toUpperCase();
+  playerTwoScoreElement.textContent = playerTwoNameInput.value.toUpperCase();
   board.style.gridTemplateColumns = `repeat(${boardSize}, 100px)`;
+  currentPlayerTurnElement.textContent = `Current Turn: ${
+    currentPlayer === 'X' ? playerOneNameInput.value : playerTwoNameInput.value
+  }`;
 
   gameBoard.forEach((value, index) => {
-    const cell = document.createElement('div');
-    cell.classList.add('cell');
-    cell.textContent = value;
-    cell.addEventListener('click', () => cellClick(index));
+    const cell = createCell(value, index);
     board.appendChild(cell);
   });
+}
+
+function createCell(value, index) {
+  const cell = document.createElement('div');
+  cell.classList.add('cell');
+  cell.textContent = value;
+  cell.addEventListener('click', () => cellClick(index));
+  return cell;
 }
 
 function cellClick(index) {
@@ -47,7 +63,6 @@ function cellClick(index) {
 function checkWinner() {
   for (let i = 0; i < boardSize; i++) {
     if (checkLine(i * boardSize, 1)) return;
-
     if (checkLine(i, boardSize)) return;
   }
 
@@ -71,7 +86,7 @@ function checkLine(start, step) {
     line.every((value) => value === 'O')
   ) {
     const winnerName =
-      currentPlayer === 'X'
+      gameBoard[start] === 'X'
         ? playerOneNameInput.value
         : playerTwoNameInput.value;
     alert(`Player ${winnerName} wins!`);
@@ -79,9 +94,9 @@ function checkLine(start, step) {
     startGame();
     return true;
   }
-
   return false;
 }
+
 function updateScores(winnerName) {
   if (winnerName === playerOneNameInput.value) {
     playerOneScore++;
@@ -93,12 +108,8 @@ function updateScores(winnerName) {
 }
 
 function displayScores() {
-  const playerOneScoreElement = document.getElementById('playerOneScore');
-  const playerTwoScoreElement = document.getElementById('playerTwoScore');
-  const middleScoreElement = document.getElementById('middleScore');
-
-  playerOneScoreElement.textContent = `${playerOneNameInput.value}: ${playerOneScore}`;
-  playerTwoScoreElement.textContent = `${playerTwoNameInput.value}: ${playerTwoScore}`;
+  playerOneScoreElement.textContent = playerOneNameInput.value.toUpperCase();
+  playerTwoScoreElement.textContent = playerTwoNameInput.value.toUpperCase();
   middleScoreElement.textContent = `${playerOneScore}:${playerTwoScore}`;
 }
 
